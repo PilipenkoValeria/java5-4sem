@@ -5,23 +5,49 @@ import java.util.Objects;
 
 public class UpTriangleMatrix extends Matrix {
     public UpTriangleMatrix(int size) {
-        super(size);
+        //super(size);
+        if (size <= 0) {
+            throw new IllegalArgumentException("Размер матрицы должен быть больше 0");
+        }
+        this.size = size;
+        this.elements = new double[(size * size + size) / 2];
     }
 
+    UpTriangleMatrix(int size, double... elements) {
+        if (size <= 0) {
+            throw new IllegalArgumentException("Задан неккоректный размер матрицы");
+        }
+        this.size = size;
+        this.elements = new double[(size * size + size) / 2];
+        this.elements = elements;
+    }
+
+    @Override
     public double getMatrixElem(int i, int j) {
-        if (i >= 0 && i < size && j >= 0 && j < size) {
-            return elements[i * size + j];
+        if (i >= size || j >= size || i < 0 || j < 0) {
+            throw new IllegalArgumentException("Индексы не входят в матрицу");
+        }
+        if (i > j) {
+            return 0.0;
         } else {
-            throw new IllegalArgumentException();
+            int k = 0;
+            for (int l = 1; l <= i; l++) {
+                k += l;
+            }
+            return elements[size * i + j - k];
         }
     }
 
+    @Override
     public void setMatrixElem(int i, int j, double element) {
-        if (j >= i && i >= 0 && i < size) {
-            elements[i * size + j] = element;
-            determinantIsCorrect = false;
+        if (i >= size || j >= size || i < 0 || j < 0) {
+            throw new IllegalArgumentException("Индексы не входят в матрицу");
+        }
+        if (i > j && element != 0) {
+            throw new IllegalArgumentException("Нельзя записать ненулевое значение под главной диагональю");
         } else {
-            throw new IllegalArgumentException();
+            elements[(size - i) * i + j] = element;
+            determinantIsCorrect = false;
         }
     }
 

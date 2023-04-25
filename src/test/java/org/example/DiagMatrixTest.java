@@ -6,11 +6,11 @@ import static org.junit.Assert.*;
 
 public class DiagMatrixTest {
 
-    DiagMatrix dm1 = new DiagMatrix(1, 7, 5);
+    DiagMatrix dm1 = new DiagMatrix(1,5,7);
 
     @Test
     public void getMatrixElemTest0() {
-        assertEquals(7, dm1.getMatrixElem(1, 1), 0.001);
+        assertEquals(5, dm1.getMatrixElem(1, 1), 0.001);
     }
 
     @Test

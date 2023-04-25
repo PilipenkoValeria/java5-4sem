@@ -10,11 +10,19 @@ public class Matrix implements IMatrix {
     protected boolean determinantIsCorrect = false;
 
     public Matrix(int size) {
-        if (size > 0) {
+        if (size <= 0) {
+            throw new IllegalArgumentException("Размер матрицы должен быть больше 0");
+        } else {
             this.size = size;
             this.elements = new double[size * size];
-        } else {
-            throw new IllegalArgumentException();
+        }
+    }
+
+    public Matrix(double... elements) {
+        this.size = (int) Math.sqrt(elements.length);
+        this.elements = new double[size * size];
+        for (int i = 0; i < elements.length; i++) {
+            this.elements[i] = elements[i];
         }
     }
 
@@ -64,22 +72,20 @@ public class Matrix implements IMatrix {
     }
 
     @Override
-    public void setMatrixElem( int i,  int j,  double value)  {
-        if (i >= 0 && i < size && j >= 0 && j < size) {
-            elements[i * size + j] = value;
-            determinantIsCorrect = false;
-        } else {
-            throw new IllegalArgumentException();
+    public double getMatrixElem(int i, int j) {
+        if (i >= size || j >= size || i < 0 || j < 0) {
+            throw new IllegalArgumentException("Индексы не входят в матрицу");
         }
+        return elements[i * size + j];
     }
 
     @Override
-    public double getMatrixElem( int i,  int j)  {
-        if (i >= 0 && i < size && j >= 0 && j < size) {
-            return elements[i * size + j];
-        } else {
-            throw new IllegalArgumentException();
+    public void setMatrixElem(int i, int j, double value) {
+        if (i >= size || j >= size || i < 0 || j < 0) {
+            throw new IllegalArgumentException("Индексы не входят в матрицу");
         }
+        elements[i * size + j] = value;
+        determinantIsCorrect = false;
     }
 
 

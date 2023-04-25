@@ -6,49 +6,55 @@ import java.util.Objects;
 public class DiagMatrix extends Matrix {
 
     public DiagMatrix(int size) {
-        super(size);
+        if (size <= 0) {
+            throw new IllegalArgumentException("Размер матрицы должен быть больше 0");
+        } else {
+            this.size = size;
+            this.elements = new double[size];
+        }
     }
 
     public DiagMatrix(double... elements) {
-        super(elements.length);
-        for (int i = 0; i < size; i++) {
-            setMatrixElem(i, i, elements[i]);
+        if (elements.length <= 0) {
+            throw new IllegalArgumentException("Неккоректный размер матрицы");
+        } else {
+            this.size = elements.length;
+            this.elements = new double[size];
+            System.arraycopy(elements, 0, this.elements, 0, elements.length);
         }
     }
 
+    @Override
     public double getMatrixElem(int i, int j) {
-        if (i >= 0 && i < size && j >= 0 && j < size) {
-            return elements[i * size + j];
-        } else {
-            throw new IllegalArgumentException();
+        if (i >= size || j >= size || i < 0 || j < 0) {
+            throw new IllegalArgumentException("Индексы не входят в матрицу");
         }
+        return (i != j) ? 0.0 : elements[i];
     }
 
+    @Override
     public void setMatrixElem(int i, int j, double element) {
-        if (i == j && i >= 0 && i < size) {
-            elements[i * size + j] = element;
-            determinantIsCorrect = false;
+        if (i >= size || j >= size || i < 0 || j < 0) {
+            throw new IllegalArgumentException("Индексы не входят в матрицу");
+        }
+        if (i != j && element != 0) {
+            throw new IllegalArgumentException("Нельзя записать ненулевое значение вне главной диагонали");
         } else {
-            throw new IllegalArgumentException();
+            elements[i] = element;
+            determinantIsCorrect = false;
         }
     }
 
     public double calculateDeterminant() {
-        if (!determinantIsCorrect) {
-            determinantIsCorrect = true;
-            determinant = 1;
-            double[] tmpArray = Arrays.copyOf(elements, size * size);
-            int i;
-            for (i = 0; i < size; i++) {
-                if (tmpArray[i * size + i] == 0) {
-                    determinantIsCorrect = false;
-                    return 0;
-                } else {
-                    determinant *= tmpArray[i * size + i];
-                }
-            }
+        double determinant = 1;
+        if (determinantIsCorrect) {
             return determinant;
         }
+        for (double i : elements) {
+            determinant *= i;
+        }
+        determinant = determinant;
+        determinantIsCorrect = true;
         return determinant;
     }
 

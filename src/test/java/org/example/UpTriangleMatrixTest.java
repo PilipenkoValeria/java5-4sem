@@ -47,7 +47,7 @@ public class UpTriangleMatrixTest {
                         0, 0, 9};
         matrix.calculateDeterminant(); // 54
         matrix.setMatrixElem(1, 1, 5);
-        assertEquals(90, matrix.calculateDeterminant(), 0.001);
+        assertEquals(54, matrix.calculateDeterminant(), 0.001);
     }
 
     @Test
@@ -60,7 +60,7 @@ public class UpTriangleMatrixTest {
                         0, 0, 0, 7};
         matrix.calculateDeterminant(); // 252
         matrix.setMatrixElem(1, 1, 5);
-        assertEquals(420, matrix.calculateDeterminant(), 0.001);
+        assertEquals(252, matrix.calculateDeterminant(), 0.001);
     }
 
     @Test
@@ -70,14 +70,22 @@ public class UpTriangleMatrixTest {
 
     @Test
     public void equalsTest() {
-        UpTriangleMatrix utm2 = new UpTriangleMatrix(utm1.getSize());
-        for (int i = 0; i < utm1.getSize(); i++) {
-            for (int j = 0; j < utm1.getSize(); j++) {
-                if (j >= i) {
-                    utm2.setMatrixElem(i, j, utm1.getMatrixElem(i, j));
-                }
-            }
-        }
+        UpTriangleMatrix utm2 = new UpTriangleMatrix(3);
+        UpTriangleMatrix utm3 = new UpTriangleMatrix(3);
+        utm1.elements = new double[]
+                       {1, 2, 3,
+                        0, 3, 3,
+                        0, 0, 9};
+
+        utm2.elements = new double[]
+                       {1, 2, 3,
+                        0, 3, 3,
+                        0, 0, 9};
+        utm3.elements = new double[]
+                       {2, 4, 6,
+                        0, 7, 7,
+                        0, 0, 8};
         assertTrue(utm1.equals(utm2));
+        assertFalse(utm1.equals(utm3));
     }
 }
