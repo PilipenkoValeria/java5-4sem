@@ -14,11 +14,11 @@ public class MatrixTest {
     @Before
     public void setUp() {
         m1.elements = new double[]
-                {1, 5, 25,
+                       {1, 5, 25,
                         1, 7, 49,
                         1, 8, 64};
         m2.elements = new double[]
-                {2, -5, 1, 2,
+                       {2, -5, 1, 2,
                         -3, 7, -1, 4,
                         5, -9, 2, 7,
                         4, -6, 1, 2};
