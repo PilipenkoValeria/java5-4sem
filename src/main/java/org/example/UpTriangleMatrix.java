@@ -5,7 +5,6 @@ import java.util.Objects;
 
 public class UpTriangleMatrix extends Matrix {
     public UpTriangleMatrix(int size) {
-        //super(size);
         if (size <= 0) {
             throw new IllegalArgumentException("Размер матрицы должен быть больше 0");
         }
